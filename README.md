@@ -2,7 +2,7 @@
 
 A library that implements the persistent search bar seen on apps such as Google Now, Google Maps and Google Play
 
-![GIF of its use](https://raw.github.com/Quinny898/PersistentSearch/resouurces/search.gif)
+![GIF of its use](https://raw.github.com/Quinny898/PersistentSearch/resources/search.gif)
 
 ## Dependencies
 material-menu: https://github.com/balysv/material-menu
