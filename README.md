@@ -80,8 +80,10 @@ search.setSearchListener(new SearchListener(){
 ```
 
 ## SearchResult
-This is a class that holds two parameters - Title and icon
-The title is displayed as a suggested result and will be used for searching, the icon is displayed to the left of the title in the suggestions (eg. a history icon)
+This is a class that holds two parameters - Title and icon<br />
+The title is displayed as a suggested result and will be used for searching, the icon is displayed to the left of the title in the suggestions (eg. a history icon)<br />
+You can make a SearchResult as follows<br />
+new SearchResult("Title", getResources().getDrawable(R.drawable.icon));
 
 ## All usage methods
 setMenuListener(MenuListener listener) - Sets the menu listener (see above)<br />
