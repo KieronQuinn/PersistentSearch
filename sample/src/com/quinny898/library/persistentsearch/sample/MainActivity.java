@@ -8,13 +8,13 @@ import com.quinny898.library.persistentsearch.SearchBox.SearchListener;
 import com.quinny898.library.persistentsearch.SearchResult;
 
 import android.speech.RecognizerIntent;
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 	Boolean isSearch;
 	private SearchBox search;
 
@@ -69,8 +69,8 @@ public class MainActivity extends ActionBarActivity {
 			ArrayList<String> matches = data
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			search.populateEditText(matches);
-			super.onActivityResult(requestCode, resultCode, data);
 		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	public void mic(View v) {

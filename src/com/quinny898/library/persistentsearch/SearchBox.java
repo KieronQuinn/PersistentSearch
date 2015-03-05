@@ -202,7 +202,7 @@ public class SearchBox extends RelativeLayout {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				SearchResult result = searchables.get(arg2);
+				SearchResult result = resultList.get(arg2);
 				search(result.title);
 
 			}
@@ -361,7 +361,6 @@ public class SearchBox extends RelativeLayout {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-
 			SearchResult option = getItem(position);
 			if (convertView == null) {
 				convertView = LayoutInflater.from(getContext()).inflate(
