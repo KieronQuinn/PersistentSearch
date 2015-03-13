@@ -97,7 +97,9 @@ Note that when a search occurs, the box closes. You should react to this in onSe
 This is a class that holds two parameters - Title and icon<br />
 The title is displayed as a suggested result and will be used for searching, the icon is displayed to the left of the title in the suggestions (eg. a history icon)<br />
 You can make a SearchResult as follows<br />
+```
 new SearchResult("Title", getResources().getDrawable(R.drawable.icon));
+```
 
 ## All usage methods
 See here for the documentation: http://quinny898.co.uk/PersistentSearch/
