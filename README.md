@@ -19,6 +19,7 @@ In your layout:
         android:id="@+id/searchbox"
         />
 ```
+Please include this after any elements you wish to be hidden by it in a releativelayout.
 
 **Absolute requirements in the activity code**
 ```
@@ -77,9 +78,20 @@ search.setSearchListener(new SearchListener(){
 		Toast.makeText(MainActivity.this, searchTerm +" Searched", Toast.LENGTH_LONG).show();
 		
 	}
+	
+	@Override
+	public void onSearchCleared() {
+				
+	}
 			
 });
 ```
+
+##Showing from a MenuItem
+```
+search.revealFromMenuItem(R.id.action_search, this);
+```
+Note that when a search occurs, the box closes. You should react to this in onSearch, maybe set your toolbar title?
 
 ## SearchResult
 This is a class that holds two parameters - Title and icon<br />
@@ -88,30 +100,10 @@ You can make a SearchResult as follows<br />
 new SearchResult("Title", getResources().getDrawable(R.drawable.icon));
 
 ## All usage methods
-setMenuListener(MenuListener listener) - Sets the menu listener (see above)<br />
-setSearchListener(SearchListener listener) - Sets the search listener (see above)<br />
-toggleSearch() - Forces the toggling of the search bar<br />
-micClick(Activity activity) - Used internally, but could be run by other code - Note that if the search box is open with the clear cross as an option, this will clear the search as they are the same button<br />
-setMaxLength(int length) - Set the max length of the search EditText (untested)<br />
-setLogoText() - Sets the logo text for when the search box is not in use (see above)<br />
-startVoiceRecognitionActivity(Activity a) - Used internally, when used by other code it would force the start of voice recognition, use with caution<br />
-populateEditText(ArrayList<String> matches) - Used internally for a result from the voice recognition. Not really much use otherwise<br />
-setSearchString(String text) - Sets the search string<br />
-String getSearchText() - Gets the search term<br />
-clearResults() - Clears all the results & refereshes them<br />
-int getNumberOfResults() - Returns the number of results<br />
-addSearchable(SearchResult result) - Add a suggestion (see above)<br />
-removeSuggestion(SearchResult result) - Remove a suggestion<br />
-clearSearchable() - Clear all the searchable items<br />
-updateResults() - Refreshes the results (run after adding, removing or clearing searchables)<br />
-ArrayList<SearchResult> getSearchables() - Returns an ArrayList of all the searchable SearchResults
-
-## Notes
-This library's methods are subject to change, don't release an app with this in just yet unless you don't mind changing names when it updates
+See here for the documentation: http://quinny898.co.uk/PersistentSearch/
 
 ## The Future
-I hope to implement the reveal animation for showing it post-hiding a toolbar from a search button press, like the Play Store appears to do<br />
-If there is sufficient demand, I may also backport to Android 2.1+
+If there is sufficient demand, I may backport to Android 2.1+
 
 ## Licence
 Copyright 2015 Kieron Quinn<br />

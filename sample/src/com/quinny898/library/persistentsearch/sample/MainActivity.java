@@ -59,6 +59,12 @@ public class MainActivity extends Activity {
 				Toast.makeText(MainActivity.this, searchTerm +" Searched", Toast.LENGTH_LONG).show();
 				
 			}
+
+			@Override
+			public void onSearchCleared() {
+				//Called when the clear button is clicked
+				
+			}
 			
 		});
 	}
@@ -72,7 +78,11 @@ public class MainActivity extends Activity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
+	
+	public void reveal(View v){
+		startActivity(new Intent(this, RevealActivity.class));
+	}
+	
 	public void mic(View v) {
 		search.micClick(this);
 	}
