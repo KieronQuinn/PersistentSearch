@@ -41,3 +41,20 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle
+.idea
+*.iml
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# generated files
+bin/
+gen/
+out/
+build/
+
+# Gradle cache
+.gradle
