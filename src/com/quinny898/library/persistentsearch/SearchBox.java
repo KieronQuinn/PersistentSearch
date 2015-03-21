@@ -425,7 +425,12 @@ public class SearchBox extends RelativeLayout {
 		return 0;
 	}
 	
-
+	/***
+	 * Set the searchable items from a list (replaces any current items)
+	 */
+	public void setSearchables(ArrayList<SearchResult> searchables){
+		this.searchables = searchables;
+	}
 
 	/***
 	 * Add a searchable item
