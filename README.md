@@ -9,7 +9,9 @@ material-menu: https://github.com/balysv/material-menu
 
 ## Usage
 
-Import it as a library project
+Import it as a library project 
+
+(Method 1. Click "Import Module" from the File and Select the Persistent search folder you downloaded and click ok. Now right click the app directory in project settings and select "Open Module Settings" there click app from left menu and select dependencies from the top right corner now add persistent search option shown in the window, click ok and syn the gradle.)
 
 In your layout:
 ```
