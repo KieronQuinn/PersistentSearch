@@ -4,14 +4,18 @@ import io.codetail.animation.ReverseInterpolator;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.balysv.materialmenu.MaterialMenuView;
 import com.balysv.materialmenu.MaterialMenuDrawable.IconState;
 
 import android.animation.LayoutTransition;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.speech.RecognizerIntent;
@@ -45,6 +49,8 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class SearchBox extends RelativeLayout {
 
+	public static final int VOICE_RECOGNITION_CODE = 1234;
+
 	private MaterialMenuView materialMenu;
 	private TextView logo;
 	private EditText search;
@@ -64,6 +70,13 @@ public class SearchBox extends RelativeLayout {
 	private ProgressBar pb;
 	private ArrayList<SearchResult> initialResults;
 	private boolean searchWithoutSuggestions = true;
+
+	private boolean isVoiceRecognitionIntentSupported;
+	private VoiceRecognitionListener voiceRecognitionListener;
+	private Activity mContainerActivity;
+	private Fragment mContainerFragment;
+	private android.support.v4.app.Fragment mContainerSupportFragment;
+
 
 	/**
 	 * Create a new searchbox
@@ -116,6 +129,7 @@ public class SearchBox extends RelativeLayout {
 		resultList = new ArrayList<SearchResult>();
 		results.setAdapter(new SearchAdapter(context, resultList));
 		animate = true;
+		isVoiceRecognitionIntentSupported = isIntentAvailable(context, new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH));
 		logo.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -153,6 +167,23 @@ public class SearchBox extends RelativeLayout {
 			}
 		});
 		logoText = "Logo";
+		micStateChanged();
+		mic.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (voiceRecognitionListener != null) {
+					voiceRecognitionListener.onClick();
+				} else {
+					micClick();
+				}
+			}
+		});
+	}
+
+	private static boolean isIntentAvailable(Context context, Intent intent) {
+		PackageManager mgr = context.getPackageManager();
+		List<ResolveInfo> list = mgr.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+		return list.size() > 0;
 	}
 	
 	/***
@@ -240,17 +271,63 @@ public class SearchBox extends RelativeLayout {
 	
 	/***
 	 * Start the voice input activity manually
-	 * @param activity
+	 * @param
 	 */
-	public void startVoiceRecognitionActivity(Activity activity) {
-		if (activity != null) {
+	public void startVoiceRecognition() {
+		if (isMicEnabled()) {
 			Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 			intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 					RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 			intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
 					context.getString(R.string.speak_now));
-			activity.startActivityForResult(intent, 1234);
+			if (mContainerActivity != null) {
+				mContainerActivity.startActivityForResult(intent, VOICE_RECOGNITION_CODE);
+			} else if (mContainerFragment != null) {
+				mContainerFragment.startActivityForResult(intent, VOICE_RECOGNITION_CODE);
+			} else if (mContainerSupportFragment != null) {
+				mContainerSupportFragment.startActivityForResult(intent, VOICE_RECOGNITION_CODE);
+			}
 		}
+	}
+
+	/***
+	 * Enable voice recognition for Activity
+	 * @param context
+	 */
+	public void enableVoiceRecognition(Activity context) {
+		mContainerActivity = context;
+		micStateChanged();
+	}
+
+	/***
+	 * Enable voice recognition for Fragment
+	 * @param context
+	 */
+	public void enableVoiceRecognition(Fragment context) {
+		mContainerFragment = context;
+		micStateChanged();
+	}
+
+	/***
+	 * Enable voice recognition for Support Fragment
+	 * @param context
+	 */
+	public void enableVoiceRecognition(android.support.v4.app.Fragment context) {
+		mContainerSupportFragment = context;
+		micStateChanged();
+	}
+
+	private boolean isMicEnabled() {
+		return isVoiceRecognitionIntentSupported && (mContainerActivity != null || mContainerSupportFragment != null || mContainerFragment != null);
+	}
+
+	private void micStateChanged() {
+		mic.setVisibility((!isMic || isMicEnabled()) ? VISIBLE : INVISIBLE);
+	}
+
+	private void micStateChanged(boolean isMic) {
+		this.isMic = isMic;
+		micStateChanged();
 	}
 	
 	/***
@@ -270,13 +347,13 @@ public class SearchBox extends RelativeLayout {
 	
 	/***
 	 * Mandatory method for the onClick event
-	 * @param activity
+	 * @param
 	 */
-	public void micClick(Activity activity) {
+	public void micClick() {
 		if (!isMic) {
 			setSearchString("");
 		} else {
-			startVoiceRecognitionActivity(activity);
+			startVoiceRecognition();
 		}
 
 	}
@@ -540,12 +617,12 @@ public class SearchBox extends RelativeLayout {
 			@Override
 			public void afterTextChanged(Editable s) {
 				if (s.length() > 0) {
-					isMic = false;
+					micStateChanged(false);
 					mic.setImageDrawable(context.getResources().getDrawable(
 							R.drawable.ic_clear));
 					updateResults();
 				} else {
-					isMic = true;
+					micStateChanged(true);
 					mic.setImageDrawable(context.getResources().getDrawable(
 							R.drawable.ic_action_mic));
 					if(initialResults != null){
@@ -591,7 +668,7 @@ public class SearchBox extends RelativeLayout {
 		if (listener != null)
 			listener.onSearchOpened();
 		if (getSearchText().length() > 0) {
-			isMic = false;
+			micStateChanged(false);
 			mic.setImageDrawable(context.getResources().getDrawable(
 					R.drawable.ic_clear));
 		}
@@ -634,7 +711,7 @@ public class SearchBox extends RelativeLayout {
 		}
 		if (listener != null)
 			listener.onSearchClosed();
-		isMic = true;
+		micStateChanged(true);
 		mic.setImageDrawable(context.getResources().getDrawable(
 				R.drawable.ic_action_mic));
 		InputMethodManager inputMethodManager = (InputMethodManager) context
@@ -748,6 +825,13 @@ public class SearchBox extends RelativeLayout {
 		 * Called when the menu button is pressed
 		 */
 		public void onMenuClick();
+	}
+
+	public interface VoiceRecognitionListener {
+		/**
+		 * Called when the menu button is pressed
+		 */
+		public void onClick();
 	}
 
 }

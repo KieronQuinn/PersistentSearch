@@ -71,8 +71,6 @@
             android:layout_alignBottom="@+id/material_menu_button"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/mic"
-            android:onClick="mic"
             android:layout_marginRight="13dp"
             android:src="@drawable/ic_action_mic" />
 
