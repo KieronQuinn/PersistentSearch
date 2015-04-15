@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'com.balysv.materialmenu:material-menu:1.5.1'
 }
  
@@ -21,7 +22,7 @@ android {
     buildToolsVersion "21.1.2"
  
     defaultConfig {
-        minSdkVersion 11
+        minSdkVersion 13
         targetSdkVersion 21
     }
  
