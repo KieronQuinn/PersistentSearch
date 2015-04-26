@@ -25,19 +25,29 @@ Please include this after any elements you wish to be hidden by it in a releativ
 
 **Absolute requirements in the activity code**
 ```
-@Override
-protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	if (requestCode == 1234 && resultCode == RESULT_OK) {
-		ArrayList<String> matches = data
-				.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-		search.populateEditText(matches);
-	}
-	super.onActivityResult(requestCode, resultCode, data);
-}
+  //FRAGMENT:
+  @Override
+  public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    mSearchBox.setLogoText("Your logo");
+    mSearchBox.enableVoiceRecognition(this);
+  }
+  //OR ACTIVITY:
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    mSearchBox.enableVoiceRecognition(this);
+  }
 
-public void mic(View v) {
-	search.micClick(this);
-}
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (isAdded() && requestCode == SearchBox.VOICE_RECOGNITION_CODE && resultCode == getActivity().RESULT_OK) {
+      ArrayList<String> matches = data
+          .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+      mSearchBox.populateEditText(matches);
+    }
+    super.onActivityResult(requestCode, resultCode, data);
+  }
 ```
 
 More on implementation:
