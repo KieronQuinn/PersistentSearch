@@ -8,7 +8,7 @@ A library that implements the persistent search bar seen on apps such as Google 
 ## Usage
 
 Android Studio:
-Add the Sonatype respository if you have not already:
+Add the Sonatype repository if you have not already:
 ```
 maven {
         url "https://oss.sonatype.org/content/repositories/snapshots"
