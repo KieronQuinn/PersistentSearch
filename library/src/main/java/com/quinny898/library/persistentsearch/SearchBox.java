@@ -498,7 +498,8 @@ public class SearchBox extends RelativeLayout {
 	 * @param text Text
 	 */
 	public void setSearchString(String text) {
-		search.setText(text);
+		search.setText("");
+		search.append(text);
 	}
 	
 	/***
