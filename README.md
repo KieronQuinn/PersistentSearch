@@ -106,6 +106,12 @@ search.revealFromMenuItem(R.id.action_search, this);
 ```
 Note that when a search occurs, the box closes. You should react to this in onSearch, maybe set your toolbar title?
 
+## Custom
+Set the logo text color:
+```
+search.setLogoTextColor(Color.parse("#000000"));
+```
+
 ## SearchResult
 This is a class that holds two parameters - Title and icon<br />
 The title is displayed as a suggested result and will be used for searching, the icon is displayed to the left of the title in the suggestions (eg. a history icon)<br />

@@ -467,6 +467,15 @@ public class SearchBox extends RelativeLayout {
 		this.logoText = text;
 		setLogoTextInt(text);
 	}
+
+
+	/***
+	 * Set the text color of the logo
+	 * @param color
+	 */
+	public void setLogoTextColor(int color){
+		logo.setTextColor(color);
+	}
 	
 	/***
 	 * Set the image drawable of the drawer icon logo (do not set if you have not hidden the menu icon)
@@ -489,7 +498,8 @@ public class SearchBox extends RelativeLayout {
 	 * @param text Text
 	 */
 	public void setSearchString(String text) {
-		search.setText(text);
+		search.setText("");
+		search.append(text);
 	}
 	
 	/***
