@@ -54,33 +54,33 @@ public class SearchBox extends RelativeLayout {
 
 	public static final int VOICE_RECOGNITION_CODE = 1234;
 
-	private MaterialMenuView        materialMenu;
-	private TextView                logo;
-	private EditText                search;
-	private Context                 context;
-	private ListView                results;
+	private MaterialMenuView materialMenu;
+	private TextView logo;
+	private EditText search;
+	private Context context;
+	private ListView results;
 	private ArrayList<SearchResult> resultList;
 	private ArrayList<SearchResult> searchables;
-	private boolean                 searchOpen;
-	private boolean                 animate;
-	private View                    tint;
-	private boolean                 isMic;
-	private ImageView               mic;
-	private ImageView               drawerLogo;
-	private SearchListener          listener;
-	private MenuListener            menuListener;
-	private FrameLayout             rootLayout;
-	private String                  logoText;
-	private ProgressBar             pb;
+	private boolean searchOpen;
+	private boolean animate;
+	private View tint;
+	private boolean isMic;
+	private ImageView mic;
+	private ImageView drawerLogo;
+	private SearchListener listener;
+	private MenuListener menuListener;
+	private FrameLayout rootLayout;
+	private String logoText;
+	private ProgressBar pb;
 	private ArrayList<SearchResult> initialResults;
 	private boolean searchWithoutSuggestions = true;
 
-	private boolean                         isVoiceRecognitionIntentSupported;
-	private VoiceRecognitionListener        voiceRecognitionListener;
-	private Activity                        mContainerActivity;
-	private Fragment                        mContainerFragment;
+	private boolean isVoiceRecognitionIntentSupported;
+	private VoiceRecognitionListener voiceRecognitionListener;
+	private Activity mContainerActivity;
+	private Fragment mContainerFragment;
 	private android.support.v4.app.Fragment mContainerSupportFragment;
-	private SearchFilter                    mSearchFilter;
+	private SearchFilter mSearchFilter;
 
 	/**
 	 * Create a new searchbox
@@ -125,7 +125,8 @@ public class SearchBox extends RelativeLayout {
 				if (searchOpen) {
 					toggleSearch();
 				} else {
-					if (menuListener != null) menuListener.onMenuClick();
+					if (menuListener != null)
+						menuListener.onMenuClick();
 				}
 			}
 
@@ -133,8 +134,7 @@ public class SearchBox extends RelativeLayout {
 		resultList = new ArrayList<SearchResult>();
 		results.setAdapter(new SearchAdapter(context, resultList));
 		animate = true;
-		isVoiceRecognitionIntentSupported = isIntentAvailable(context, new Intent(RecognizerIntent
-				.ACTION_RECOGNIZE_SPEECH));
+		isVoiceRecognitionIntentSupported = isIntentAvailable(context, new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH));
 		logo.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -143,7 +143,7 @@ public class SearchBox extends RelativeLayout {
 			}
 
 		});
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
 			RelativeLayout searchRoot = (RelativeLayout) findViewById(R.id.search_root);
 			LayoutTransition lt = new LayoutTransition();
 			lt.setDuration(100);
