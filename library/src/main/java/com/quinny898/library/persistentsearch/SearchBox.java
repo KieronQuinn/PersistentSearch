@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
+import android.support.annotation.MenuRes;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -35,6 +36,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,7 +68,9 @@ public class SearchBox extends RelativeLayout {
 	private View tint;
 	private boolean isMic;
 	private ImageView mic;
-	private ImageView drawerLogo;
+	private ImageView overflow;
+    private PopupMenu popupMenu;
+    private ImageView drawerLogo;
 	private SearchListener listener;
 	private MenuListener menuListener;
 	private FrameLayout rootLayout;
@@ -82,7 +86,7 @@ public class SearchBox extends RelativeLayout {
 	private android.support.v4.app.Fragment mContainerSupportFragment;
 
 
-	/**
+    /**
 	 * Create a new searchbox
 	 * @param context Context
 	 */
@@ -105,7 +109,7 @@ public class SearchBox extends RelativeLayout {
 	 * @param attrs Attributes
 	 * @param defStyle Style
 	 */
-	public SearchBox(Context context, AttributeSet attrs, int defStyle) {
+	public SearchBox(final Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		inflate(context, R.layout.searchbox, this);
 		this.searchOpen = false;
@@ -117,6 +121,7 @@ public class SearchBox extends RelativeLayout {
 		this.context = context;
 		this.pb = (ProgressBar) findViewById(R.id.pb);
 		this.mic = (ImageView) findViewById(R.id.mic);
+		this.overflow = (ImageView) findViewById(R.id.overflow);
 		this.drawerLogo = (ImageView) findViewById(R.id.drawer_logo);
 		materialMenu.setOnClickListener(new OnClickListener() {
 
@@ -183,6 +188,12 @@ public class SearchBox extends RelativeLayout {
 				} else {
 					micClick();
 				}
+			}
+		});
+		overflow.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+                popupMenu.show();
 			}
 		});
 	}
@@ -343,6 +354,16 @@ public class SearchBox extends RelativeLayout {
 		this.isMic = isMic;
 		micStateChanged();
 	}
+
+    public void setOverflowMenu(@MenuRes int overflowMenuResId) {
+        overflow.setVisibility(VISIBLE);
+        popupMenu = new PopupMenu(context, overflow);
+        popupMenu.getMenuInflater().inflate(overflowMenuResId, popupMenu.getMenu());
+    }
+
+    public void setOverflowMenuItemClickListener(PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
+        popupMenu.setOnMenuItemClickListener(onMenuItemClickListener);
+    }
 	
 	/***
 	 * Set whether to show the progress bar spinner

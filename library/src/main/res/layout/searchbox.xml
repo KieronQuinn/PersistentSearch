@@ -69,12 +69,23 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignBottom="@+id/material_menu_button"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/mic"
+                android:layout_toLeftOf="@+id/overflow"
+                android:layout_alignWithParentIfMissing="true"
                 android:onClick="mic"
                 android:layout_marginRight="13dp"
                 android:src="@drawable/ic_action_mic" />
+
+            <ImageView
+                android:id="@+id/overflow"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignBottom="@+id/material_menu_button"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="13dp"
+                android:src="@drawable/ic_more_vert_black_24dp"
+                android:visibility="gone"/>
 
             <com.balysv.materialmenu.MaterialMenuView
                 android:id="@+id/material_menu_button"
