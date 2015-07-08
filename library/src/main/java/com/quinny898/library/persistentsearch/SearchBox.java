@@ -225,8 +225,11 @@ public class SearchBox extends RelativeLayout {
 
 	private static boolean isIntentAvailable(Context context, Intent intent) {
 		PackageManager mgr = context.getPackageManager();
-		List<ResolveInfo> list = mgr.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-		return list.size() > 0;
+		if (mgr != null) {
+			List<ResolveInfo> list = mgr.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+			return list.size() > 0;
+		}
+		return false;
 	}
 	
 	/***
