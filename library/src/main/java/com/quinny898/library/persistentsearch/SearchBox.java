@@ -190,10 +190,48 @@ public class SearchBox extends RelativeLayout {
 				}
 			}
 		});
+
 		overflow.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-                popupMenu.show();
+				popupMenu.show();
+			}
+		});
+
+		search.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				if (s.length() > 0) {
+					micStateChanged(false);
+					mic.setImageDrawable(getContext().getResources().getDrawable(
+							R.drawable.ic_clear));
+					updateResults();
+				} else {
+					micStateChanged(true);
+					mic.setImageDrawable(getContext().getResources().getDrawable(
+							R.drawable.ic_action_mic));
+					if(initialResults != null){
+						setInitialResults();
+					}else{
+						updateResults();
+					}
+				}
+
+				if (listener != null)
+					listener.onSearchTermChanged();
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+										  int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+									  int count) {
+
 			}
 		});
 	}
@@ -662,42 +700,6 @@ public class SearchBox extends RelativeLayout {
 		this.results.setVisibility(View.VISIBLE);
 		animate = true;
 		results.setAdapter(new SearchAdapter(context, resultList));
-		search.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				if (s.length() > 0) {
-					micStateChanged(false);
-					mic.setImageDrawable(context.getResources().getDrawable(
-							R.drawable.ic_clear));
-					updateResults();
-				} else {
-					micStateChanged(true);
-					mic.setImageDrawable(context.getResources().getDrawable(
-							R.drawable.ic_action_mic));
-					if(initialResults != null){
-						setInitialResults();
-					}else{
-						updateResults();
-					}
-				}
-				
-				if (listener != null)
-					listener.onSearchTermChanged();
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-
-			}
-
-		});
 		results.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
