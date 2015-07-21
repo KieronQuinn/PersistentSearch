@@ -276,7 +276,7 @@ public class SearchBox extends RelativeLayout {
 
 			@Override
 			public void onAnimationStart() {
-				
+
 			}
 
 			@Override
@@ -411,13 +411,16 @@ public class SearchBox extends RelativeLayout {
 	 * Populate the searchbox with words, in an arraylist. Used by the voice input
 	 * @param matches Matches
 	 */
-	public void populateEditText(ArrayList<String> matches) {
+	public void populateEditText(String matches) {
 		toggleSearch();
 		String text = "";
-		for (int x = 0; x < matches.size(); x++) {
+		// this is not required because voice search should be only one
+		/*for (int x = 0; x < matches.size(); x++) {
 			text = text + matches.get(x) + " ";
 		}
 		text = text.trim();
+		*/
+		text = matches;
 		setSearchString(text);
 		search(text);
 	}
