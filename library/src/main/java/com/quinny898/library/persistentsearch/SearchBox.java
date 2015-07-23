@@ -222,16 +222,6 @@ public class SearchBox extends RelativeLayout {
 
 		});
 	}
-	
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return true;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return search.onTouchEvent(event);
-    }
 
 	private static boolean isIntentAvailable(Context context, Intent intent) {
 		PackageManager mgr = context.getPackageManager();
