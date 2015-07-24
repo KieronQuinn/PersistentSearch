@@ -81,6 +81,8 @@ public class SearchBox extends RelativeLayout {
 	private Activity mContainerActivity;
 	private Fragment mContainerFragment;
 	private android.support.v4.app.Fragment mContainerSupportFragment;
+	private SearchFilter mSearchFilter;
+
 
 
 	/**
@@ -222,6 +224,14 @@ public class SearchBox extends RelativeLayout {
 			}
 
 		});
+		// Default search Algorithm
+		mSearchFilter = new SearchFilter() {
+			@Override
+			public boolean onFilter(SearchResult searchResult, String searchTerm) {
+				return searchResult.title.toLowerCase()
+						.startsWith(searchTerm.toLowerCase());
+			}
+		};
 	}
 
 	private static boolean isIntentAvailable(Context context, Intent intent) {
@@ -468,10 +478,10 @@ public class SearchBox extends RelativeLayout {
 		resultList.clear();
 		int count = 0;
 		for (int x = 0; x < searchables.size(); x++) {
-			if (searchables.get(x).title.toLowerCase().startsWith(
-					getSearchText().toLowerCase())
-					&& count < 5) {
-				addResult(searchables.get(x));
+			SearchResult searchable = searchables.get(x);
+
+			if(mSearchFilter.onFilter(searchable,getSearchText()) && count < 5) {
+				addResult(searchable);
 				count++;
 			}
 		}
@@ -562,6 +572,14 @@ public class SearchBox extends RelativeLayout {
 	
 	public void setDrawerLogo(Integer icon) {
 		setDrawerLogo(getResources().getDrawable(icon));
+	}
+	
+	/***
+	 * Set the SearchFilter used to filter out results based on the current search term
+	 * @param filter SearchFilter
+	 */
+	public void setSearchFilter(SearchFilter filter) {
+		this.mSearchFilter = filter;
 	}
 
 	/***
@@ -912,6 +930,13 @@ public class SearchBox extends RelativeLayout {
 		 * Called when the menu button is pressed
 		 */
 		public void onClick();
+	}
+	
+	public interface SearchFilter {
+		/**
+		 * Called against each Searchable to determine if it should be filtered out of the results
+		 */
+		public boolean onFilter(SearchResult searchResult ,String searchTerm);
 	}
 
 }
