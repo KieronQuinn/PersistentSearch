@@ -157,7 +157,7 @@ public class SearchBox extends RelativeLayout {
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					search(getSearchText());
+					search(getSearchText(), false);
 					return true;
 				}
 				return false;
@@ -169,7 +169,7 @@ public class SearchBox extends RelativeLayout {
 					if (TextUtils.isEmpty(getSearchText())) {
 						toggleSearch();
 					} else {
-						search(getSearchText());
+						search(getSearchText(), false);
 					}
 					return true;
 				}
@@ -461,7 +461,7 @@ public class SearchBox extends RelativeLayout {
         toggleSearch();
         String text = matches.get(0).trim();
         setSearchString(text);
-        search(text);
+        search(text, false);
     }
 	
 	/***
@@ -703,13 +703,17 @@ public class SearchBox extends RelativeLayout {
 		animator.start();
 	}
 
-	private void search(SearchResult result) {
+	private void search(SearchResult result, boolean resultClicked) {
 		if(!searchWithoutSuggestions && getNumberOfResults() == 0)return;
 		setSearchString(result.title);
 		if (!TextUtils.isEmpty(getSearchText())) {
 			setLogoTextInt(result.title);
-			if (listener != null)
-				listener.onSearch(result.title);
+			if (listener != null) {
+				if (resultClicked)
+					listener.onResultClick(result);
+				else
+					listener.onSearch(result.title);
+			}
 		} else {
 			setLogoTextInt(logoText);
 		}
@@ -741,7 +745,7 @@ public class SearchBox extends RelativeLayout {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
                 SearchResult result = resultList.get(arg2);
-                search(result);
+                search(result, true);
 
 			}
 
@@ -825,7 +829,7 @@ public class SearchBox extends RelativeLayout {
 
 	private void search(String text) {
 		SearchResult option = new SearchResult(text, null);
-		search(option);
+		search(option, false);
 		
 	}
 
@@ -909,6 +913,12 @@ public class SearchBox extends RelativeLayout {
 		 * @param result
 		 */
 		public void onSearch(String result);
+		
+		/**
+		 * Called when a search result is clicked, with the result
+		 * @param result
+		 */
+		public void onResultClick(SearchResult result);
 	}
 
 	public interface MenuListener {
