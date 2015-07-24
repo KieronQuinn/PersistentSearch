@@ -457,19 +457,12 @@ public class SearchBox extends RelativeLayout {
 	 * Populate the searchbox with words, in an arraylist. Used by the voice input
 	 * @param matches Matches
 	 */
-	public void populateEditText(String matches) {
-		toggleSearch();
-		String text = "";
-		// this is not required because voice search should be only one
-		/*for (int x = 0; x < matches.size(); x++) {
-			text = text + matches.get(x) + " ";
-		}
-		text = text.trim();
-		*/
-		text = matches;
-		setSearchString(text);
-		search(text);
-	}
+	public void populateEditText(ArrayList<String> matches) {
+        toggleSearch();
+        String text = matches.get(0).trim();
+        setSearchString(text);
+        search(text);
+    }
 	
 	/***
 	 * Force an update of the results
