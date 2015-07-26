@@ -157,7 +157,7 @@ public class SearchBox extends RelativeLayout {
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					search(getSearchText(), false);
+					search(getSearchText());
 					return true;
 				}
 				return false;
@@ -169,7 +169,7 @@ public class SearchBox extends RelativeLayout {
 					if (TextUtils.isEmpty(getSearchText())) {
 						toggleSearch();
 					} else {
-						search(getSearchText(), false);
+						search(getSearchText());
 					}
 					return true;
 				}
@@ -461,7 +461,7 @@ public class SearchBox extends RelativeLayout {
         toggleSearch();
         String text = matches.get(0).trim();
         setSearchString(text);
-        search(text, false);
+        search(text);
     }
 	
 	/***
