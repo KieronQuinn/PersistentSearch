@@ -478,11 +478,11 @@ public class SearchBox extends RelativeLayout {
 	
 	/***
 	 * Populate the searchbox with words, in an arraylist. Used by the voice input
-	 * @param matches Matches
+	 * @param match Matches
 	 */
-	public void populateEditText(ArrayList<String> matches) {
+	public void populateEditText(String match) {
         toggleSearch();
-        String text = matches.get(0).trim();
+        String text = match.trim();
         setSearchString(text);
         search(text);
     }

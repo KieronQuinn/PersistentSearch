@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 			}
 
 			@Override
-			public void onSearchTermChanged() {
+			public void onSearchTermChanged(String term) {
 				//React to the search term changing
 				//Called after it has updated results
 			}
@@ -60,13 +60,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void onSearch(String searchTerm) {
 				Toast.makeText(MainActivity.this, searchTerm +" Searched", Toast.LENGTH_LONG).show();
-				
 			}
 
 			@Override
 			public void onSearchCleared() {
 				//Called when the clear button is clicked
-				
 			}
 			
 		});
