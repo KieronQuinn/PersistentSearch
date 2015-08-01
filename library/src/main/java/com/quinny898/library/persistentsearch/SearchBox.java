@@ -574,6 +574,14 @@ public class SearchBox extends RelativeLayout {
 	public void setSearchFilter(SearchFilter filter) {
 		this.mSearchFilter = filter;
 	}
+	
+	/***
+	 * Sets the hint for the Search Field
+	 * @param hint The hint for Search Field
+	 */
+	public void setHint(String hint) {
+		this.search.setHint(hint);
+	}
 
 	/***
 	 * Get the searchbox's current text
