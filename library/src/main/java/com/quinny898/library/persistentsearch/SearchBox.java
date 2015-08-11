@@ -82,6 +82,7 @@ public class SearchBox extends RelativeLayout {
 	private Fragment mContainerFragment;
 	private android.support.v4.app.Fragment mContainerSupportFragment;
 	private SearchFilter mSearchFilter;
+	private ArrayAdapter<? extends SearchResult> mAdapter;
 
 
 
@@ -135,7 +136,7 @@ public class SearchBox extends RelativeLayout {
 
 		});
 		resultList = new ArrayList<SearchResult>();
-		results.setAdapter(new SearchAdapter(context, resultList));
+		setAdapter(new SearchAdapter(context, resultList, search));
 		animate = true;
 		isVoiceRecognitionIntentSupported = isIntentAvailable(context, new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH));
 		logo.setOnClickListener(new OnClickListener() {
@@ -277,7 +278,7 @@ public class SearchBox extends RelativeLayout {
 				int[] location = new int[2];
 				menuButton.getLocationInWindow(location);
 				hideCircularly(location[0] + menuButton.getWidth() * 2 / 3, location[1],
-                        activity);
+						activity);
 			}
 		}
 	}
@@ -402,6 +403,14 @@ public class SearchBox extends RelativeLayout {
 	public void enableVoiceRecognition(Fragment context) {
 		mContainerFragment = context;
 		micStateChanged();
+	}
+
+
+	/***
+	 * get result list/array
+	 */
+	public ArrayList<SearchResult> getResults(){
+		return resultList;
 	}
 
 	/***
@@ -582,6 +591,11 @@ public class SearchBox extends RelativeLayout {
 	public String getSearchText() {
 		return search.getText().toString();
 	}
+
+	public void setAdapter(ArrayAdapter<? extends SearchResult> adapter){
+		mAdapter = adapter;
+		results.setAdapter(adapter);
+	}
 	
 	/***
 	 * Set the searchbox's current text manually
@@ -597,9 +611,20 @@ public class SearchBox extends RelativeLayout {
 	 * @param result SearchResult
 	 */
 	private void addResult(SearchResult result) {
-		if (resultList != null && resultList.size() < 6) {
+		if (resultList != null) {
 			resultList.add(result);
-			((SearchAdapter) results.getAdapter()).notifyDataSetChanged();
+			mAdapter.notifyDataSetChanged();
+		}
+	}
+
+	/***
+	 * Add a results
+	 * @param result SearchResult
+	 */
+	private void addAllResult(ArrayList<? extends SearchResult> result) {
+		if (resultList != null) {
+			resultList.addAll(result);
+			mAdapter.notifyDataSetChanged();
 		}
 	}
 	
@@ -609,7 +634,7 @@ public class SearchBox extends RelativeLayout {
 	public void clearResults() {
 		if (resultList != null) {
 			resultList.clear();
-			((SearchAdapter) results.getAdapter()).notifyDataSetChanged();
+			mAdapter.notifyDataSetChanged();
 		}
 		listener.onSearchCleared();
 	}
@@ -637,6 +662,14 @@ public class SearchBox extends RelativeLayout {
 	public void addSearchable(SearchResult searchable) {
 		if (!searchables.contains(searchable))
 			searchables.add(searchable);
+	}
+
+	/***
+	 * Add a searchable items
+	 * @param searchable SearchResult
+	 */
+	public void addAllSearchables(ArrayList<? extends SearchResult> searchable) {
+		searchables.addAll(searchable);
 	}
 
 	/***
@@ -677,28 +710,28 @@ public class SearchBox extends RelativeLayout {
 				root, (int)x, (int)y, 0, finalRadius);
 		animator.setInterpolator(new AccelerateDecelerateInterpolator());
 		animator.setDuration(500);
-		animator.addListener(new SupportAnimator.AnimatorListener(){
+		animator.addListener(new SupportAnimator.AnimatorListener() {
 
 			@Override
 			public void onAnimationCancel() {
-				
+
 			}
 
 			@Override
 			public void onAnimationEnd() {
-				toggleSearch();				
+				toggleSearch();
 			}
 
 			@Override
 			public void onAnimationRepeat() {
-				
+
 			}
 
 			@Override
 			public void onAnimationStart() {
-				
+
 			}
-			
+
 		});
 		animator.start();
 	}
@@ -734,14 +767,14 @@ public class SearchBox extends RelativeLayout {
 		search.requestFocus();
 		this.results.setVisibility(View.VISIBLE);
 		animate = true;
-		results.setAdapter(new SearchAdapter(context, resultList));
+		//setAdapter(new SearchAdapter(context, resultList, search));
 		results.setOnItemClickListener(new OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                SearchResult result = resultList.get(arg2);
-                search(result);
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+									long arg3) {
+				SearchResult result = resultList.get(arg2);
+				search(result);
 
 			}
 
@@ -784,10 +817,6 @@ public class SearchBox extends RelativeLayout {
 		}
 	}
 
-	
-
-	
-
 	private void closeSearch() {
         if(animateDrawerLogo){
             this.materialMenu.animateState(IconState.BURGER);
@@ -811,17 +840,11 @@ public class SearchBox extends RelativeLayout {
 		searchOpen = false;
 	}
 
-	
-
-	
 
 	private void setLogoTextInt(String text) {
 		logo.setText(text);
 	}
 
-	
-	
-	
 
 	private void search(String text) {
 		SearchResult option = new SearchResult(text, null);
@@ -829,11 +852,12 @@ public class SearchBox extends RelativeLayout {
 		
 	}
 
-	
-
-	class SearchAdapter extends ArrayAdapter<SearchResult> {
-		public SearchAdapter(Context context, ArrayList<SearchResult> options) {
+	public static class SearchAdapter extends ArrayAdapter<SearchResult> {
+		private boolean mAnimate;
+		private EditText mSearch;
+		public SearchAdapter(Context context, ArrayList<SearchResult> options, EditText search) {
 			super(context, 0, options);
+			mSearch = search;
 		}
 
 		int count = 0;
@@ -845,13 +869,13 @@ public class SearchBox extends RelativeLayout {
 				convertView = LayoutInflater.from(getContext()).inflate(
 						R.layout.search_option, parent, false);
 
-				if (animate) {
-					Animation anim = AnimationUtils.loadAnimation(context,
+				if (mAnimate) {
+					Animation anim = AnimationUtils.loadAnimation(getContext(),
 							R.anim.anim_down);
 					anim.setDuration(400);
 					convertView.startAnimation(anim);
 					if (count == this.getCount()) {
-						animate = false;
+						mAnimate = false;
 					}
 					count++;
 				}
@@ -873,8 +897,8 @@ public class SearchBox extends RelativeLayout {
 
 				@Override
 				public void onClick(View v) {
-					setSearchString(title.getText().toString());
-					search.setSelection(search.getText().length());
+					mSearch.setText(title.getText().toString());
+					mSearch.setSelection(mSearch.getText().length());
 				}
 
 			});
