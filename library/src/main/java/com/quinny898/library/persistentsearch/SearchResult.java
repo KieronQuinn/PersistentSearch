@@ -6,6 +6,17 @@ public class SearchResult {
     public String title;
     public Drawable icon;
 
+    public int viewType = 0;
+
+    public SearchResult(String title){
+        this.title = title;
+    }
+
+    public SearchResult(int viewType, String title){
+        this.viewType = viewType;
+        this.title = title;
+    }
+
     /**
      * Create a search result with text and an icon
      * @param title
@@ -23,5 +34,4 @@ public class SearchResult {
     public String toString() {
         return title;
     }
-    
 }
