@@ -17,6 +17,7 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -905,6 +906,17 @@ public class SearchBox extends RelativeLayout {
 
 			return convertView;
 		}
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent e) {
+		Log.e("D", "dispatch key event");
+		if(e.getKeyCode() == KeyEvent.KEYCODE_BACK && getVisibility() == View.VISIBLE){
+			hideCircularly((Activity) getContext());
+			return true;
+		}
+
+		return super.dispatchKeyEvent(e);
 	}
 
 	public interface SearchListener {
