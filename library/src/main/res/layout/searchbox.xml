@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <io.codetail.widget.RevealFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/searchbox_rfl"
     android:layout_height="wrap_content">
@@ -42,7 +43,7 @@
                 android:layout_marginLeft="54dp"
                 android:singleLine="true"
                 android:gravity="center_vertical"
-                android:text="Logo"
+                tools:text="Logo"
                 android:textColor="#212121"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
