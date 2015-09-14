@@ -27,15 +27,15 @@ public class MainActivity extends Activity {
 		for(int x = 0; x < 10; x++){
 			SearchResult option = new SearchResult("Result " + Integer.toString(x), getResources().getDrawable(R.drawable.ic_history));
 			search.addSearchable(option);
-		}		
+		}
 		search.setMenuListener(new MenuListener(){
 
 			@Override
 			public void onMenuClick() {
 				//Hamburger has been clicked
-				Toast.makeText(MainActivity.this, "Menu click", Toast.LENGTH_LONG).show();				
+				Toast.makeText(MainActivity.this, "Menu click", Toast.LENGTH_LONG).show();
 			}
-			
+
 		});
 		search.setSearchListener(new SearchListener(){
 
@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 			}
 
 			@Override
-			public void onSearchTermChanged() {
+			public void onSearchTermChanged(String searchTerm) {
 				//React to the search term changing
 				//Called after it has updated results
 			}
@@ -58,15 +58,15 @@ public class MainActivity extends Activity {
 			@Override
 			public void onSearch(String searchTerm) {
 				Toast.makeText(MainActivity.this, searchTerm +" Searched", Toast.LENGTH_LONG).show();
-				
+
 			}
 
 			@Override
 			public void onSearchCleared() {
 				//Called when the clear button is clicked
-				
+
 			}
-			
+
 		});
 	}
 
@@ -75,14 +75,14 @@ public class MainActivity extends Activity {
 		if (requestCode == 1234 && resultCode == RESULT_OK) {
 			ArrayList<String> matches = data
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-			search.populateEditText(matches.get(0));
+			search.populateEditText(matches);
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
 	public void reveal(View v){
 		startActivity(new Intent(this, RevealActivity.class));
 	}
 
-	
+
 }
