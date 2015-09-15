@@ -275,7 +275,7 @@ public class SearchBox extends RelativeLayout {
 				int[] location = new int[2];
 				menuButton.getLocationInWindow(location);
 				hideCircularly(location[0] + menuButton.getWidth() * 2 / 3, location[1],
-                        activity);
+					activity);
 			}
 		}
 	}
@@ -530,6 +530,10 @@ public class SearchBox extends RelativeLayout {
 	public void setMaxLength(int length) {
 		search.setFilters(new InputFilter[] { new InputFilter.LengthFilter(
 				length) });
+	}
+
+	public void setHint(String hint) {
+		search.setHint(hint);
 	}
 
 	/***
