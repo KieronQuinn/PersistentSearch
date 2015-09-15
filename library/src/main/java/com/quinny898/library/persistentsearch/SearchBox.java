@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
-import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
@@ -18,7 +17,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -287,12 +285,9 @@ public class SearchBox extends RelativeLayout {
      * @param activity Activity
      */
 	public void hideCircularly(int x, int y, Activity activity){
-		Display display = activity.getWindowManager().getDefaultDisplay();
-		Point size = new Point();
 		final FrameLayout layout = (FrameLayout) activity.getWindow().getDecorView()
 				.findViewById(android.R.id.content);
 		RelativeLayout root = (RelativeLayout) findViewById(R.id.search_root);
-		display.getSize(size);
 		Resources r = getResources();
 		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 96,
 				r.getDisplayMetrics());
