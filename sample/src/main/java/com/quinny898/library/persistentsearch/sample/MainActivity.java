@@ -50,9 +50,8 @@ public class MainActivity extends Activity {
 			}
 
 			@Override
-			public void onSearchTermChanged() {
-				//React to the search term changing
-				//Called after it has updated results
+			public void onSearchTermChanged(String term) {
+
 			}
 
 			@Override
@@ -75,7 +74,7 @@ public class MainActivity extends Activity {
 		if (requestCode == 1234 && resultCode == RESULT_OK) {
 			ArrayList<String> matches = data
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-			search.populateEditText(matches.get(0));
+			search.populateEditText(matches);
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
