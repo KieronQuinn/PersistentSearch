@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.quinny898.library.persistentsearch.SearchBox;
@@ -27,7 +29,7 @@ public class MainActivity extends Activity {
 		for(int x = 0; x < 10; x++){
 			SearchResult option = new SearchResult("Result " + Integer.toString(x), getResources().getDrawable(R.drawable.ic_history));
 			search.addSearchable(option);
-		}		
+		}
 		search.setMenuListener(new MenuListener(){
 
 			@Override
@@ -50,7 +52,7 @@ public class MainActivity extends Activity {
 			}
 
 			@Override
-			public void onSearchTermChanged() {
+			public void onSearchTermChanged(String term) {
 				//React to the search term changing
 				//Called after it has updated results
 			}
@@ -58,17 +60,27 @@ public class MainActivity extends Activity {
 			@Override
 			public void onSearch(String searchTerm) {
 				Toast.makeText(MainActivity.this, searchTerm +" Searched", Toast.LENGTH_LONG).show();
-				
 			}
 
 			@Override
 			public void onSearchCleared() {
 				//Called when the clear button is clicked
-				
 			}
 			
 		});
-	}
+        search.setOverflowMenu(R.menu.overflow_menu);
+        search.setOverflowMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.test_menu_item:
+                        Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

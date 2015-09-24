@@ -80,7 +80,7 @@ public class RevealActivity extends ActionBarActivity {
 			}
 
 			@Override
-			public void onSearchTermChanged() {
+			public void onSearchTermChanged(String term) {
 				// React to the search term changing
 				// Called after it has updated results
 			}
