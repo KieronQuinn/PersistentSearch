@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
     <RelativeLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/search_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +43,7 @@
                 android:layout_marginLeft="54dp"
                 android:singleLine="true"
                 android:gravity="center_vertical"
-                android:text="Logo"
+                tools:text="Logo"
                 android:textColor="#212121"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -53,7 +54,7 @@
                 android:layout_alignBottom="@+id/material_menu_button"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="64dp"
+                android:layout_marginLeft="54dp"
                 android:background="@null"
                 android:ems="10"
                 android:textColor="#212121"

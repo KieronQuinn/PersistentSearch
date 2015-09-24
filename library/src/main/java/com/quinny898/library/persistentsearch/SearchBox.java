@@ -181,7 +181,7 @@ public class SearchBox extends RelativeLayout {
 				return false;
 			}
 		});
-		logoText = "Logo";
+		logoText = "";
 		micStateChanged();
 		mic.setOnClickListener(new OnClickListener() {
 			@Override
@@ -300,12 +300,9 @@ public class SearchBox extends RelativeLayout {
      * @param activity Activity
      */
 	public void hideCircularly(int x, int y, Activity activity){
-		Display display = activity.getWindowManager().getDefaultDisplay();
-		Point size = new Point();
 		final FrameLayout layout = (FrameLayout) activity.getWindow().getDecorView()
 				.findViewById(android.R.id.content);
 		RelativeLayout root = (RelativeLayout) findViewById(R.id.search_root);
-		display.getSize(size);
 		Resources r = getResources();
 		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 96,
 				r.getDisplayMetrics());
