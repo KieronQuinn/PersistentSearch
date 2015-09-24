@@ -40,15 +40,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.balysv.materialmenu.MaterialMenuDrawable.IconState;
-import com.balysv.materialmenu.MaterialMenuView;
+import com.balysv.materialmenu.ps.MaterialMenuDrawable.IconState;
+import com.balysv.materialmenu.ps.MaterialMenuView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.codetail.animation.ReverseInterpolator;
-import io.codetail.animation.SupportAnimator;
-import io.codetail.animation.ViewAnimationUtils;
+import io.codetailps.animation.ReverseInterpolator;
+import io.codetailps.animation.SupportAnimator;
+import io.codetailps.animation.ViewAnimationUtils;
 
 public class SearchBox extends RelativeLayout {
 

@@ -16,7 +16,7 @@ maven {
 ```
 Import it as a dependency:
 ```
-compile 'com.quinny898.library.persistentsearch:library:1.0.0-SNAPSHOT'
+compile 'com.quinny898.library.persistentsearch:library:1.1.0-SNAPSHOT'
 ```
 
 Eclipse:
@@ -91,6 +91,12 @@ search.setSearchListener(new SearchListener(){
 		Toast.makeText(MainActivity.this, searchTerm +" Searched", Toast.LENGTH_LONG).show();
 		
 	}
+	
+	@Override
+	public void onResultClick(SearchResult result){
+		//React to a result being clicked
+	}
+	
 	
 	@Override
 	public void onSearchCleared() {
