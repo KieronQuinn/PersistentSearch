@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.balysv.materialmenu;
+package com.balysv.materialmenu.ps;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -31,15 +31,15 @@ import com.nineoldandroids.animation.Animator;
 
 import com.quinny898.library.persistentsearch.R;
 
-import static com.balysv.materialmenu.MaterialMenuDrawable.DEFAULT_COLOR;
-import static com.balysv.materialmenu.MaterialMenuDrawable.DEFAULT_PRESSED_DURATION;
-import static com.balysv.materialmenu.MaterialMenuDrawable.DEFAULT_SCALE;
-import static com.balysv.materialmenu.MaterialMenuDrawable.DEFAULT_TRANSFORM_DURATION;
-import static com.balysv.materialmenu.MaterialMenuDrawable.IconState;
-import static com.balysv.materialmenu.MaterialMenuDrawable.Stroke;
+import static com.balysv.materialmenu.ps.MaterialMenuDrawable.DEFAULT_COLOR;
+import static com.balysv.materialmenu.ps.MaterialMenuDrawable.DEFAULT_PRESSED_DURATION;
+import static com.balysv.materialmenu.ps.MaterialMenuDrawable.DEFAULT_SCALE;
+import static com.balysv.materialmenu.ps.MaterialMenuDrawable.DEFAULT_TRANSFORM_DURATION;
+import static com.balysv.materialmenu.ps.MaterialMenuDrawable.IconState;
+import static com.balysv.materialmenu.ps.MaterialMenuDrawable.Stroke;
 
 /**
- * A basic View wrapper of {@link com.balysv.materialmenu.MaterialMenuDrawable}. Used
+ * A basic View wrapper of {@link MaterialMenuDrawable}. Used
  * for custom view ActionBar or other layouts
  */
 public class MaterialMenuView extends View implements MaterialMenu {

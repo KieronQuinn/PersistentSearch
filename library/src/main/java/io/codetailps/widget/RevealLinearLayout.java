@@ -1,15 +1,15 @@
-package io.codetail.widget;
+package io.codetailps.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
-import io.codetail.animation.RevealAnimator;
+import io.codetailps.animation.RevealAnimator;
 
-public class RevealFrameLayout extends FrameLayout implements RevealAnimator{
+public class RevealLinearLayout extends LinearLayout implements RevealAnimator{
 
     Path mRevealPath;
 
@@ -21,22 +21,20 @@ public class RevealFrameLayout extends FrameLayout implements RevealAnimator{
 
     View mTarget;
 
-    public RevealFrameLayout(Context context) {
+    public RevealLinearLayout(Context context) {
         this(context, null);
     }
 
-    public RevealFrameLayout(Context context, AttributeSet attrs) {
+    public RevealLinearLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RevealFrameLayout(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public RevealLinearLayout(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs);
         mRevealPath = new Path();
     }
 
     /**
-     * Animation target
-     *
      * @hide
      */
     @Override
@@ -45,8 +43,6 @@ public class RevealFrameLayout extends FrameLayout implements RevealAnimator{
     }
 
     /**
-     * Epicenter of animation circle reveal
-     *
      * @hide
      */
     @Override
@@ -56,8 +52,6 @@ public class RevealFrameLayout extends FrameLayout implements RevealAnimator{
     }
 
     /**
-     * Flag that animation is enabled
-     *
      * @hide
      */
     @Override
@@ -66,8 +60,6 @@ public class RevealFrameLayout extends FrameLayout implements RevealAnimator{
     }
 
     /**
-     * Circle radius size
-     *
      * @hide
      */
     @Override
@@ -77,8 +69,6 @@ public class RevealFrameLayout extends FrameLayout implements RevealAnimator{
     }
 
     /**
-     * Circle radius size
-     *
      * @hide
      */
     @Override
@@ -89,7 +79,7 @@ public class RevealFrameLayout extends FrameLayout implements RevealAnimator{
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if(!mClipOutlines && child != mTarget)
+        if (!mClipOutlines && child != mTarget)
             return super.drawChild(canvas, child, drawingTime);
 
         final int state = canvas.save();
@@ -105,5 +95,4 @@ public class RevealFrameLayout extends FrameLayout implements RevealAnimator{
 
         return isInvalided;
     }
-
 }

@@ -1,15 +1,15 @@
-package io.codetail.widget;
+package io.codetailps.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
-import io.codetail.animation.RevealAnimator;
+import io.codetailps.animation.RevealAnimator;
 
-public class RevealLinearLayout extends LinearLayout implements RevealAnimator{
+public class RevealFrameLayout extends FrameLayout implements RevealAnimator{
 
     Path mRevealPath;
 
@@ -21,20 +21,22 @@ public class RevealLinearLayout extends LinearLayout implements RevealAnimator{
 
     View mTarget;
 
-    public RevealLinearLayout(Context context) {
+    public RevealFrameLayout(Context context) {
         this(context, null);
     }
 
-    public RevealLinearLayout(Context context, AttributeSet attrs) {
+    public RevealFrameLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RevealLinearLayout(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs);
+    public RevealFrameLayout(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
         mRevealPath = new Path();
     }
 
     /**
+     * Animation target
+     *
      * @hide
      */
     @Override
@@ -43,6 +45,8 @@ public class RevealLinearLayout extends LinearLayout implements RevealAnimator{
     }
 
     /**
+     * Epicenter of animation circle reveal
+     *
      * @hide
      */
     @Override
@@ -52,6 +56,8 @@ public class RevealLinearLayout extends LinearLayout implements RevealAnimator{
     }
 
     /**
+     * Flag that animation is enabled
+     *
      * @hide
      */
     @Override
@@ -60,6 +66,8 @@ public class RevealLinearLayout extends LinearLayout implements RevealAnimator{
     }
 
     /**
+     * Circle radius size
+     *
      * @hide
      */
     @Override
@@ -69,6 +77,8 @@ public class RevealLinearLayout extends LinearLayout implements RevealAnimator{
     }
 
     /**
+     * Circle radius size
+     *
      * @hide
      */
     @Override
@@ -79,7 +89,7 @@ public class RevealLinearLayout extends LinearLayout implements RevealAnimator{
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        if (!mClipOutlines && child != mTarget)
+        if(!mClipOutlines && child != mTarget)
             return super.drawChild(canvas, child, drawingTime);
 
         final int state = canvas.save();
@@ -95,4 +105,5 @@ public class RevealLinearLayout extends LinearLayout implements RevealAnimator{
 
         return isInvalided;
     }
+
 }

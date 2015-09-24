@@ -1,4 +1,4 @@
-package io.codetail.animation;
+package io.codetailps.animation;
 
 import android.annotation.TargetApi;
 import android.graphics.Rect;

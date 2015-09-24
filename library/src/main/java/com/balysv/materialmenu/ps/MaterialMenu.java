@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.balysv.materialmenu;
+package com.balysv.materialmenu.ps;
 
 import android.view.animation.Interpolator;
 
 import com.nineoldandroids.animation.Animator;
 
-import static com.balysv.materialmenu.MaterialMenuDrawable.IconState;
+import static com.balysv.materialmenu.ps.MaterialMenuDrawable.IconState;
 
 /**
  * API for interaction with {@link MaterialMenuDrawable}
@@ -97,11 +97,11 @@ public interface MaterialMenu {
     public void setRTLEnabled(boolean rtlEnabled);
 
     /**
-     * Manually set a transformation value for an {@link com.balysv.materialmenu.MaterialMenuDrawable.AnimationState}
+     * Manually set a transformation value for an {@link MaterialMenuDrawable.AnimationState}
      *
      * @param animationState state to set value in
-     * @param value          between {@link com.balysv.materialmenu.MaterialMenuDrawable#TRANSFORMATION_START} and
-     *                       {@link com.balysv.materialmenu.MaterialMenuDrawable#TRANSFORMATION_END}.
+     * @param value          between {@link MaterialMenuDrawable#TRANSFORMATION_START} and
+     *                       {@link MaterialMenuDrawable#TRANSFORMATION_END}.
      */
     public void setTransformationOffset(MaterialMenuDrawable.AnimationState animationState, float value);
 

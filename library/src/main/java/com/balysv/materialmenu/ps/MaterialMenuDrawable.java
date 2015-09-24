@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.balysv.materialmenu;
+package com.balysv.materialmenu.ps;
 
 
 import android.content.Context;

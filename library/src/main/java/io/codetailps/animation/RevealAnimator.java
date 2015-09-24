@@ -1,4 +1,4 @@
-package io.codetail.animation;
+package io.codetailps.animation;
 
 import android.annotation.TargetApi;
 import android.graphics.Rect;
@@ -9,7 +9,7 @@ import com.nineoldandroids.animation.Animator;
 
 import java.lang.ref.WeakReference;
 
-import static io.codetail.animation.ViewAnimationUtils.SimpleAnimationListener;
+import static io.codetailps.animation.ViewAnimationUtils.SimpleAnimationListener;
 
 /**
  * @hide

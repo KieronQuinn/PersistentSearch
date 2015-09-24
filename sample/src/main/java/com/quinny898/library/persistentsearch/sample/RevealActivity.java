@@ -25,7 +25,6 @@ public class RevealActivity extends ActionBarActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.reveal);
-		getString(R.string.app_name);
 		search = (SearchBox) findViewById(R.id.searchbox);
         search.enableVoiceRecognition(this);
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
