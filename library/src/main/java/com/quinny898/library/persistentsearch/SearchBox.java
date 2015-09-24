@@ -86,6 +86,7 @@ public class SearchBox extends RelativeLayout {
 	private Fragment mContainerFragment;
 	private android.support.v4.app.Fragment mContainerSupportFragment;
 	private SearchFilter mSearchFilter;
+	private ArrayAdapter<? extends SearchResult> mAdapter;
 
 
 
@@ -140,8 +141,8 @@ public class SearchBox extends RelativeLayout {
 
 		});
 		resultList = new ArrayList<SearchResult>();
-		results.setAdapter(new SearchAdapter(context, resultList));
-		animate = true;
+        setAdapter(new SearchAdapter(context, resultList, search));
+        animate = true;
 		isVoiceRecognitionIntentSupported = isIntentAvailable(context, new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH));
 		logo.setOnClickListener(new OnClickListener() {
 
@@ -603,6 +604,14 @@ public class SearchBox extends RelativeLayout {
 		this.search.setHint(hint);
 	}
 
+    /***
+     * Get result list
+     * @return Results
+     */
+    public ArrayList<SearchResult> getResults() {
+        return resultList;
+    }
+
 	/***
 	 * Get the searchbox's current text
 	 * @return Text
@@ -610,7 +619,16 @@ public class SearchBox extends RelativeLayout {
 	public String getSearchText() {
 		return search.getText().toString();
 	}
-	
+
+    /***
+     * Set the adapter for the search results
+     * @param adapter Adapter
+     */
+    public void setAdapter(ArrayAdapter<? extends SearchResult> adapter) {
+        mAdapter = adapter;
+        results.setAdapter(adapter);
+    }
+
 	/***
 	 * Set the searchbox's current text manually
 	 * @param text Text
@@ -625,10 +643,10 @@ public class SearchBox extends RelativeLayout {
 	 * @param result SearchResult
 	 */
 	private void addResult(SearchResult result) {
-		if (resultList != null && resultList.size() < 6) {
+		if (resultList != null) {
 			resultList.add(result);
-			((SearchAdapter) results.getAdapter()).notifyDataSetChanged();
-		}
+            mAdapter.notifyDataSetChanged();
+        }
 	}
 	
 	/***
@@ -637,8 +655,8 @@ public class SearchBox extends RelativeLayout {
 	public void clearResults() {
 		if (resultList != null) {
 			resultList.clear();
-			((SearchAdapter) results.getAdapter()).notifyDataSetChanged();
-		}
+            mAdapter.notifyDataSetChanged();
+        }
 		listener.onSearchCleared();
 	}
 
@@ -666,6 +684,14 @@ public class SearchBox extends RelativeLayout {
 		if (!searchables.contains(searchable))
 			searchables.add(searchable);
 	}
+
+    /***
+     * Add all searchable items
+     * @param searchable SearchResult
+     */
+    public void addAllSearchables(ArrayList<? extends SearchResult> searchable) {
+        searchables.addAll(searchable);
+    }
 
 	/***
 	 * Remove a searchable item
@@ -766,7 +792,7 @@ public class SearchBox extends RelativeLayout {
 		search.requestFocus();
 		this.results.setVisibility(View.VISIBLE);
 		animate = true;
-		results.setAdapter(new SearchAdapter(context, resultList));
+        setAdapter(new SearchAdapter(context, resultList, search));
 		results.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -861,11 +887,14 @@ public class SearchBox extends RelativeLayout {
 		
 	}
 
-	
 
-	class SearchAdapter extends ArrayAdapter<SearchResult> {
-		public SearchAdapter(Context context, ArrayList<SearchResult> options) {
+
+    public static class SearchAdapter extends ArrayAdapter<SearchResult> {
+        private boolean mAnimate;
+        private EditText mSearch;
+		public SearchAdapter(Context context, ArrayList<SearchResult> options, EditText search) {
 			super(context, 0, options);
+            mSearch = search;
 		}
 
 		int count = 0;
@@ -877,13 +906,13 @@ public class SearchBox extends RelativeLayout {
 				convertView = LayoutInflater.from(getContext()).inflate(
 						R.layout.search_option, parent, false);
 
-				if (animate) {
-					Animation anim = AnimationUtils.loadAnimation(context,
+				if (mAnimate) {
+					Animation anim = AnimationUtils.loadAnimation(getContext(),
 							R.anim.anim_down);
 					anim.setDuration(400);
 					convertView.startAnimation(anim);
 					if (count == this.getCount()) {
-						animate = false;
+						mAnimate = false;
 					}
 					count++;
 				}
@@ -905,8 +934,8 @@ public class SearchBox extends RelativeLayout {
 
 				@Override
 				public void onClick(View v) {
-					setSearchString(title.getText().toString());
-					search.setSelection(search.getText().length());
+                    mSearch.setText(title.getText().toString());
+                    mSearch.setSelection(mSearch.getText().length());
 				}
 
 			});
@@ -914,6 +943,16 @@ public class SearchBox extends RelativeLayout {
 			return convertView;
 		}
 	}
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.KEYCODE_BACK && getVisibility() == View.VISIBLE){
+            hideCircularly((Activity) getContext());
+            return true;
+        }
+
+        return super.dispatchKeyEvent(e);
+    }
 
 	public interface SearchListener {
 		/**

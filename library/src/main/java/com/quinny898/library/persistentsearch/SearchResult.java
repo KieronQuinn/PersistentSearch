@@ -15,6 +15,17 @@ public class SearchResult {
        this.title = title;
        this.icon = icon;
     }
+
+    public int viewType = 0;
+
+    public SearchResult(String title){
+        this.title = title;
+    }
+
+    public SearchResult(int viewType, String title){
+        this.viewType = viewType;
+        this.title = title;
+    }
     
     /**
      * Return the title of the result

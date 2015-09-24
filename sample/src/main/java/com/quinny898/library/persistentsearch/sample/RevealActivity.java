@@ -94,6 +94,11 @@ public class RevealActivity extends ActionBarActivity {
 			}
 
 			@Override
+			public void onResultClick(SearchResult result) {
+				//React to result being clicked
+			}
+
+			@Override
 			public void onSearchCleared() {
 				
 			}
