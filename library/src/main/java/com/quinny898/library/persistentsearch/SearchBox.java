@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
-import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
@@ -19,7 +18,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,6 +130,7 @@ public class SearchBox extends RelativeLayout {
 			@Override
 			public void onClick(View v) {
 				if (searchOpen) {
+
 					toggleSearch();
 				} else {
 					if (menuListener != null)
@@ -272,7 +271,7 @@ public class SearchBox extends RelativeLayout {
 				int[] location = new int[2];
 				menuButton.getLocationInWindow(location);
 				revealFrom((float) location[0], (float) location[1],
-						activity, this);
+                        activity, this);
 			}
 		}
 	}
@@ -314,30 +313,29 @@ public class SearchBox extends RelativeLayout {
 		animator.setInterpolator(new ReverseInterpolator());
 		animator.setDuration(500);
 		animator.start();
-		animator.addListener(new SupportAnimator.AnimatorListener(){
+		animator.addListener(new SupportAnimator.AnimatorListener() {
 
-			@Override
-			public void onAnimationStart() {
+            @Override
+            public void onAnimationStart() {
 
-			}
+            }
 
-			@Override
-			public void onAnimationEnd() {
-				setVisibility(View.GONE);
-				closeSearch();
-			}
+            @Override
+            public void onAnimationEnd() {
+                setVisibility(View.GONE);
+            }
 
-			@Override
-			public void onAnimationCancel() {
-				
-			}
+            @Override
+            public void onAnimationCancel() {
 
-			@Override
-			public void onAnimationRepeat() {
-				
-			}
-			
-		});
+            }
+
+            @Override
+            public void onAnimationRepeat() {
+
+            }
+
+        });
 	}
 	
 	/***
@@ -554,8 +552,8 @@ public class SearchBox extends RelativeLayout {
 	 * @param length Length
 	 */
 	public void setMaxLength(int length) {
-		search.setFilters(new InputFilter[] { new InputFilter.LengthFilter(
-				length) });
+		search.setFilters(new InputFilter[]{new InputFilter.LengthFilter(
+                length)});
 	}
 	
 	/***
@@ -731,29 +729,29 @@ public class SearchBox extends RelativeLayout {
 				root, (int)x, (int)y, 0, finalRadius);
 		animator.setInterpolator(new AccelerateDecelerateInterpolator());
 		animator.setDuration(500);
-		animator.addListener(new SupportAnimator.AnimatorListener(){
+		animator.addListener(new SupportAnimator.AnimatorListener() {
 
-			@Override
-			public void onAnimationCancel() {
-				
-			}
+            @Override
+            public void onAnimationCancel() {
 
-			@Override
-			public void onAnimationEnd() {
-				toggleSearch();				
-			}
+            }
 
-			@Override
-			public void onAnimationRepeat() {
-				
-			}
+            @Override
+            public void onAnimationEnd() {
+                toggleSearch();
+            }
 
-			@Override
-			public void onAnimationStart() {
-				
-			}
-			
-		});
+            @Override
+            public void onAnimationRepeat() {
+
+            }
+
+            @Override
+            public void onAnimationStart() {
+
+            }
+
+        });
 		animator.start();
 	}
 
@@ -793,6 +791,7 @@ public class SearchBox extends RelativeLayout {
 		this.results.setVisibility(View.VISIBLE);
 		animate = true;
         setAdapter(new SearchAdapter(context, resultList, search));
+        searchOpen = true;
 		results.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -800,10 +799,9 @@ public class SearchBox extends RelativeLayout {
                                     long arg3) {
                 SearchResult result = resultList.get(arg2);
                 search(result, true);
+            }
 
-			}
-
-		});
+        });
 		if(initialResults != null){
 			setInitialResults();
 		}else{
@@ -821,8 +819,8 @@ public class SearchBox extends RelativeLayout {
 			InputMethodManager inputMethodManager = (InputMethodManager) context
 					.getSystemService(Context.INPUT_METHOD_SERVICE);
 			inputMethodManager.toggleSoftInputFromWindow(
-					getApplicationWindowToken(),
-					InputMethodManager.SHOW_FORCED, 0);
+                    getApplicationWindowToken(),
+                    InputMethodManager.SHOW_FORCED, 0);
 		}
 	}
 	
@@ -954,7 +952,8 @@ public class SearchBox extends RelativeLayout {
         return super.dispatchKeyEvent(e);
     }
 
-	public interface SearchListener {
+
+    public interface SearchListener {
 		/**
 		 * Called when the searchbox is opened
 		 */
