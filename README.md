@@ -129,9 +129,6 @@ new SearchResult("Title", getResources().getDrawable(R.drawable.icon));
 ## All usage methods
 See here for the documentation: http://quinny898.co.uk/PersistentSearch/
 
-## The Future
-If there is sufficient demand, I may backport to Android 2.1+
-
 ## Licence
 Copyright 2015 Kieron Quinn<br />
 <br />
