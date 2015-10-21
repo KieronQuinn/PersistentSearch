@@ -841,9 +841,7 @@ public class SearchBox extends RelativeLayout {
 		}
 	}
 
-	
 
-	
 
 	public void closeSearch() {
         if(animateDrawerLogo){
@@ -1009,4 +1007,14 @@ public class SearchBox extends RelativeLayout {
 		public boolean onFilter(SearchResult searchResult ,String searchTerm);
 	}
 
+    @Override
+    public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+        switch (keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                // do nothing
+                return true;
+        }
+
+        return super.onKeyPreIme(keyCode, event);
+    }
 }

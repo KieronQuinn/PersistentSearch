@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by Peter on 10/21/15.
@@ -12,6 +13,8 @@ import android.widget.EditText;
 public class BackEventEditText extends EditText {
 
     private SearchBox searchBox;
+
+    private long counter = 0;
 
     public void setSearchBox(SearchBox searchBox) {
         this.searchBox = searchBox;
@@ -34,12 +37,11 @@ public class BackEventEditText extends EditText {
     public boolean onKeyPreIme(int keyCode, KeyEvent event) {
         switch (keyCode){
             case KeyEvent.KEYCODE_BACK:
-//                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                inputMethodManager.hideSoftInputFromWindow(getWindowToken(), 0);
-
-                if(searchBox != null){
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getApplicationWindowToken(), 0);
+                counter++;
+                if(counter % 2 != 0)
                     searchBox.closeSearch();
-                }
 
                 return true;
         }
