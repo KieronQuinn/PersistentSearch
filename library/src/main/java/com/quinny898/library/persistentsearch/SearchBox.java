@@ -56,7 +56,7 @@ public class SearchBox extends RelativeLayout {
 
 	private MaterialMenuView materialMenu;
 	private TextView logo;
-	private EditText search;
+	private com.quinny898.library.persistentsearch.BackEventEditText search;
 	private Context context;
 	private ListView results;
 	private ArrayList<SearchResult> resultList;
@@ -118,7 +118,8 @@ public class SearchBox extends RelativeLayout {
 		this.isMic = true;
 		this.materialMenu = (MaterialMenuView) findViewById(R.id.material_menu_button);
 		this.logo = (TextView) findViewById(R.id.logo);
-		this.search = (EditText) findViewById(R.id.search);
+		this.search = (BackEventEditText) findViewById(R.id.search);
+        search.setSearchBox(this);
 		this.results = (ListView) findViewById(R.id.results);
 		this.context = context;
 		this.pb = (ProgressBar) findViewById(R.id.pb);
@@ -844,7 +845,7 @@ public class SearchBox extends RelativeLayout {
 
 	
 
-	private void closeSearch() {
+	public void closeSearch() {
         if(animateDrawerLogo){
             this.materialMenu.animateState(IconState.BURGER);
             this.drawerLogo.setVisibility(View.VISIBLE);
