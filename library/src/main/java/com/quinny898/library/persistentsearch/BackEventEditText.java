@@ -39,9 +39,7 @@ public class BackEventEditText extends EditText {
             case KeyEvent.KEYCODE_BACK:
                 InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getApplicationWindowToken(), 0);
-                counter++;
-                if(counter % 2 != 0)
-                    searchBox.closeSearch();
+                searchBox.closeSearch();
 
                 return true;
         }
