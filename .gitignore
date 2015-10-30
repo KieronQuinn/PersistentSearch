@@ -2,6 +2,7 @@
 /local.properties
 /.idea/
 /.idea/libraries
+*.iml
 .DS_Store
 /build
 gradle-mvn-push.gradle
