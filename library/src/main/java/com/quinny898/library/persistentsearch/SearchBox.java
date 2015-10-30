@@ -2,7 +2,6 @@ package com.quinny898.library.persistentsearch;
 
 import android.animation.LayoutTransition;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +11,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.speech.RecognizerIntent;
 import android.support.annotation.MenuRes;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -34,7 +35,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -82,7 +82,6 @@ public class SearchBox extends RelativeLayout {
 	private VoiceRecognitionListener voiceRecognitionListener;
 	private Activity mContainerActivity;
 	private Fragment mContainerFragment;
-	private android.support.v4.app.Fragment mContainerSupportFragment;
 	private SearchFilter mSearchFilter;
 	private ArrayAdapter<? extends SearchResult> mAdapter;
 
@@ -389,8 +388,6 @@ public class SearchBox extends RelativeLayout {
 				mContainerActivity.startActivityForResult(intent, VOICE_RECOGNITION_CODE);
 			} else if (mContainerFragment != null) {
 				mContainerFragment.startActivityForResult(intent, VOICE_RECOGNITION_CODE);
-			} else if (mContainerSupportFragment != null) {
-				mContainerSupportFragment.startActivityForResult(intent, VOICE_RECOGNITION_CODE);
 			}
 		}
 	}
@@ -413,17 +410,8 @@ public class SearchBox extends RelativeLayout {
 		micStateChanged();
 	}
 
-	/***
-	 * Enable voice recognition for Support Fragment
-	 * @param context Fragment
-	 */
-	public void enableVoiceRecognition(android.support.v4.app.Fragment context) {
-		mContainerSupportFragment = context;
-		micStateChanged();
-	}
-
 	private boolean isMicEnabled() {
-		return isVoiceRecognitionIntentSupported && (mContainerActivity != null || mContainerSupportFragment != null || mContainerFragment != null);
+		return isVoiceRecognitionIntentSupported && (mContainerActivity != null || mContainerFragment != null);
 	}
 
 	private void micStateChanged() {
