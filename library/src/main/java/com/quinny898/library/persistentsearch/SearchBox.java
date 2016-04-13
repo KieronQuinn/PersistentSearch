@@ -206,6 +206,9 @@ public class SearchBox extends RelativeLayout {
 
 			@Override
 			public void afterTextChanged(Editable s) {
+				if (listener != null)
+					listener.onSearchTermChanged(s.toString());
+				
 				if (s.length() > 0) {
 					micStateChanged(false);
 					mic.setImageDrawable(getContext().getResources().getDrawable(
@@ -221,9 +224,6 @@ public class SearchBox extends RelativeLayout {
 						updateResults();
 					}
 				}
-
-				if (listener != null)
-					listener.onSearchTermChanged(s.toString());
 			}
 
 			@Override
