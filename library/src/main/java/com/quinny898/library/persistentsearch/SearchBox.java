@@ -499,6 +499,8 @@ public class SearchBox extends RelativeLayout {
 			}
 		}
 
+        mAdapter.notifyDataSetChanged();
+
 		if (resultList.size() == 0) {
 			results.setVisibility(View.GONE);
 		} else {
