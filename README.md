@@ -1,5 +1,9 @@
-# Android Persistent Search Library
 
+
+## This project is deprecated
+It's not been maintained for well over half a year and is formally discontinued. There are better alternatives now, such as [SearchView](https://github.com/lapism/SearchView) and [FloatingSearchView](https://github.com/arimorty/floatingsearchview)
+
+# Android Persistent Search Library
 A library that implements the persistent search bar seen on apps such as Google Now, Google Maps and Google Play
 
 ![GIF of its use](https://raw.githubusercontent.com/Quinny898/PersistentSearch/master/resources/search.gif)
