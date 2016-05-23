@@ -47,7 +47,7 @@
                 android:textColor="#212121"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
+            <com.quinny898.library.persistentsearch.BackEventEditText
                 android:id="@+id/search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                 android:visibility="gone" >
 
                 <requestFocus />
-            </EditText>
+            </com.quinny898.library.persistentsearch.BackEventEditText>
 
             <ImageView
                 android:id="@+id/mic"
