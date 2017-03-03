@@ -323,7 +323,8 @@ public class SearchBox extends RelativeLayout {
             @Override
             public void onAnimationEnd() {
                 setVisibility(View.GONE);
-            }
+				searchOpen = false;
+			}
 
             @Override
             public void onAnimationCancel() {
